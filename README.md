@@ -82,5 +82,7 @@ might be useful to know about.
 
 ## Copyrights
 
+Goat (c) 2013 Brian Picciano (Apache 2.0 license)
+
 Goat ASCII Art (c) 1997 ejm, Creative Commons
 

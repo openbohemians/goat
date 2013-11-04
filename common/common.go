@@ -1,5 +1,7 @@
 package common
 
+var GOFILE = ".go"
+
 var GOATFILE = "Goatfile"
 
 type Dependency struct {

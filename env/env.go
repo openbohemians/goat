@@ -2,7 +2,7 @@ package env
 
 import (
 	"errors"
-	. "github.com/mediocregopher/goat/src/goat/common"
+	. "github.com/mediocregopher/goat/common"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -28,11 +28,32 @@ func FindGoatfile(dir string) (string, error) {
 // IsProjRoot returns whether or not a particular directory is the project
 // root for a goat project (aka, whether or not it has a goat file)
 func IsProjRoot(dir string) bool {
+  gofile := Gofile(dir)
+
+  if gofile == "" {
+    return false
+  }
+
+  return true
+}
+
+// Checks a directory for a Go file. If the directory has a go file,
+// it returns the name of the go file. Otherwise empty stringis returned.
+//
+// This allows us to support the old "Goatfile" standard as we transifition
+// to the new ".go" file.
+func Gofile(dir string) string {
+	gofile := filepath.Join(dir, GOFILE)
+	if _, err := os.Stat(gofile); os.IsExist(err) {
+    return gofile
+  }
+
 	goatfile := filepath.Join(dir, GOATFILE)
-	if _, err := os.Stat(goatfile); os.IsNotExist(err) {
-		return false
+	if _, err := os.Stat(goatfile); os.IsExist(err) {
+		return goatfile
 	}
-	return true
+
+	return ""
 }
 
 // NewGoatEnv returns a new GoatEnv struct based on the directory passed in
