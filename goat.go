@@ -1,7 +1,7 @@
 package goat
 
 var GOFILE = ".go"
-
+var GODIR  = ".lib"
 var GOATFILE = "Goatfile"
 
 type Dependency struct {

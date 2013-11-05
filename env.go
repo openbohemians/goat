@@ -64,7 +64,7 @@ func SetupGoatEnv(projroot string) (*GoatEnv, error) {
 
 	goatfile := Gofile(projroot)
 
-	projrootlib := filepath.Join(projroot, "lib")
+	projrootlib := filepath.Join(projroot, GODIR)
 
 	genv := GoatEnv{ProjRoot: projroot,
 		ProjRootLib: projrootlib,
@@ -82,7 +82,7 @@ func SetupGoatEnv(projroot string) (*GoatEnv, error) {
 // ChrootEnv changes the root directories of a given environment. Useful if you
 // want to make the dependencies download somewhere else
 func ChrootEnv(genv *GoatEnv, newroot string) {
-	newrootlib := filepath.Join(newroot, "lib")
+	newrootlib := filepath.Join(newroot, GODIR)
 	genv.ProjRoot = newroot
 	genv.ProjRootLib = newrootlib
 }

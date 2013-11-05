@@ -35,7 +35,7 @@ func header(c string, strs ...interface{}) {
 // FetchDependencies goes and retrieves the dependencies for a given GoatEnv. If
 // the dependencies have any Goatfile's in them, this will fetch the
 // dependencies listed therein as well. All dependencies are placed in the root
-// project's lib directory, INCLUDING any sub-dependencies. This is done on
+// project's .lib directory, INCLUDING any sub-dependencies. This is done on
 // purpose!
 func FetchDependencies(genv *GoatEnv) error {
 	var err error
