@@ -1,5 +1,5 @@
 local: bin
-	go build -o bin/goat goat.go
+	go build -o bin/goat main/goat.go
 
 release: bin rel
 	@echo -n "What's the name/version number of this release?: "; \

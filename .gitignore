@@ -24,3 +24,4 @@ _testmain.go
 lib/
 bin/
 rel/
+dep/

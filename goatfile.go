@@ -1,10 +1,9 @@
-package env
+package goat
 
 import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	. "github.com/mediocregopher/goat/common"
 	"io"
 )
 

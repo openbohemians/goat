@@ -1,8 +1,7 @@
-package env
+package goat
 
 import (
 	"errors"
-	. "github.com/mediocregopher/goat/common"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -44,14 +43,18 @@ func IsProjRoot(dir string) bool {
 // to the new ".go" file.
 func Gofile(dir string) string {
 	gofile := filepath.Join(dir, GOFILE)
-	if _, err := os.Stat(gofile); os.IsExist(err) {
+
+	if _, err := os.Stat(gofile); os.IsNotExist(err) {
+	  goatfile := filepath.Join(dir, GOATFILE)
+
+	  if _, err := os.Stat(goatfile); os.IsNotExist(err) {
+      return ""
+    } else {
+		  return goatfile
+	  }
+  } else {
     return gofile
   }
-
-	goatfile := filepath.Join(dir, GOATFILE)
-	if _, err := os.Stat(goatfile); os.IsExist(err) {
-		return goatfile
-	}
 
 	return ""
 }
@@ -59,7 +62,8 @@ func Gofile(dir string) string {
 // NewGoatEnv returns a new GoatEnv struct based on the directory passed in
 func SetupGoatEnv(projroot string) (*GoatEnv, error) {
 
-	goatfile := filepath.Join(projroot, GOATFILE)
+	goatfile := Gofile(projroot)
+
 	projrootlib := filepath.Join(projroot, "lib")
 
 	genv := GoatEnv{ProjRoot: projroot,

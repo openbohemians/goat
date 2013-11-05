@@ -1,20 +1,18 @@
-package env
+package goat
 
 import (
 	"errors"
 	"fmt"
-	. "github.com/mediocregopher/goat/common"
-	"github.com/mediocregopher/goat/env/deps"
 	"path/filepath"
 )
 
 type typefunc func(*GoatEnv, *Dependency) error
 
 var typemap = map[string]typefunc{
-	"":    deps.GoGet,
-	"get": deps.GoGet,
-	"git": deps.Git,
-	"hg":  deps.Hg,
+	"":    GoGet,
+	"get": GoGet,
+	"git": Git,
+	"hg":  Hg,
 }
 
 func header(c string, strs ...interface{}) {

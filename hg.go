@@ -1,9 +1,7 @@
-package deps
+package goat
 
 import (
 	"fmt"
-	. "github.com/mediocregopher/goat/common"
-	"github.com/mediocregopher/goat/exec"
 	"os"
 	"path/filepath"
 )
@@ -12,7 +10,7 @@ func Hg(genv *GoatEnv, dep *Dependency) error {
 	localloc := filepath.Join(genv.ProjRootLib, "src", dep.Path)
 
 	fmt.Println("hg", "clone", dep.Location, localloc)
-	err := exec.PipedCmd("hg", "clone", dep.Location, localloc)
+	err := PipedCmd("hg", "clone", dep.Location, localloc)
 	if err != nil {
 		return err
 	}
@@ -29,7 +27,7 @@ func Hg(genv *GoatEnv, dep *Dependency) error {
 	defer os.Chdir(origcwd)
 
 	fmt.Println("hg", "pull")
-	err = exec.PipedCmd("hg", "pull")
+	err = PipedCmd("hg", "pull")
 	if err != nil {
 		return err
 	}
@@ -38,7 +36,7 @@ func Hg(genv *GoatEnv, dep *Dependency) error {
 		dep.Reference = "tip"
 	}
 	fmt.Println("hg", "update", "-C", dep.Reference)
-	err = exec.PipedCmd("hg", "update", "-C", dep.Reference)
+	err = PipedCmd("hg", "update", "-C", dep.Reference)
 
 	return err
 

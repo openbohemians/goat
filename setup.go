@@ -1,7 +1,6 @@
-package env
+package goat
 
 import (
-	. "github.com/mediocregopher/goat/common"
 	"os"
 	"path/filepath"
 )
