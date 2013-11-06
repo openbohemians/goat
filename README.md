@@ -1,4 +1,4 @@
-# THE GOAT
+# GOAT
 
        _))
       /* \     _~
@@ -16,35 +16,42 @@ won't have to change a single line of code.
 
 There are two problems that goat aims to solve:
 
-* `go get` does not allow for specifying versions of a library.
-
 * `go get` does not have a easy of way of sandboxing your project's development
   environment. You can either muck up your global environment with dependencies
   or mess with your `GOPATH` everytime you want to develop for that project.
-  Others that want to work on your project will have to do the same.
+  Other developers that want to work on your project will have to do the same.
 
-* Other dependency managers are strange and have weird command line arguments
-  that I don't feel like learning.
+* `go get` does not allow for specifying versions of a library. Instead `go get`
+  always pulls from HEAD. Which forces developers to constantly scramble to
+  keep up with changes in dependencies.
+
+* Other dependency managers are strange and have various command line arguments
+  that we don't feel like learning.
+
+* The `go` tool expects all Go projects to be in a single Go workspace. Some 
+  developers prefer this structure and that's fine. But this structure is
+  not suitable to all organizations.
 
 # The solution
 
-* The root of a goat project has a `Goatfile` which specifies a dependency's
-  location, name, and version control reference if applicable. It is formatted
-  using super-simple json objects, each having at most four fields.
+* The root of a goat project has a *go-file* (either `.go` or `Goatfile`)
+  which specifies a dependency's location, name, and version control reference
+  if applicable. It is formatted using super-simple json objects, each having
+  at most four fields.
 
 * All dependencies are placed in a `.lib` directory at the root of your project.
-  goat will automatically look for a `Goatfile` in your current working
+  goat will automatically look for the go-file in your current working
   directory or one of its parents, and call that the project root. For the rest
-  of the command's duration your GOPATH will have the project root prepended to
-  it, and `<projroot>/.lib` prepended to that. This has many useful properties,
-  most notably that your dependencies are sandboxed inside your code, but are
-  still usable exactly as they would have been if they were global.
+  of the command's duration your $GOPATH will be `<projroot>/.lib`. This has
+  many useful properties, most notably that your dependencies are sandboxed
+  inside your code, but are still usable exactly as they would have been if
+  they were global.
 
 * Goat is a wrapper around the go command line utility. It adds one new command,
   all other commands are passed straight through to the normal go binary. This
   command is `goat deps`, and it retrieves all dependencies listed in your
   `Goatfile` and puts them into a folder called `.lib` in your project. If any of
-  those dependencies have `Goatfiles` then those are processed and put in your
+  those dependencies have go-files then those are processed and put in your
   project's `.lib` folder as well (this is done recursively).
 
 # Installation
