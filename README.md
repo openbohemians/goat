@@ -39,20 +39,20 @@ There are two problems that goat aims to solve:
   if applicable. It is formatted using super-simple json objects, each having
   at most four fields.
 
-* All dependencies are placed in a `.lib` directory at the root of your project.
-  goat will automatically look for the go-file in your current working
+* All dependencies are placed in a `.goat/dep/` directory at the root of the
+  project. Goat will automatically look for the go-file in your current working
   directory or one of its parents, and call that the project root. For the rest
-  of the command's duration your $GOPATH will be `<projroot>/.lib`. This has
-  many useful properties, most notably that your dependencies are sandboxed
+  of the command's duration your $GOPATH will be `<projroot>/.goat/dep`. This
+  has many useful properties, most notably that your dependencies are sandboxed
   inside your code, but are still usable exactly as they would have been if
   they were global.
 
 * Goat is a wrapper around the go command line utility. It adds one new command,
   all other commands are passed straight through to the normal go binary. This
   command is `goat deps`, and it retrieves all dependencies listed in your
-  `Goatfile` and puts them into a folder called `.lib` in your project. If any of
-  those dependencies have go-files then those are processed and put in your
-  project's `.lib` folder as well (this is done recursively).
+  `Goatfile` and puts them into a folder called `.goat/dep` in your project. If
+  any of those dependencies have go-files then those are processed and put in
+  your project's `.goat/dep` folder as well (this is done recursively).
 
 # Installation
 
