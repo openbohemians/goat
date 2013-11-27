@@ -5,6 +5,7 @@ import (
 	"fmt"
 	. "github.com/mediocregopher/goat/common"
 	"github.com/mediocregopher/goat/env/deps"
+	"os"
 	"path/filepath"
 )
 
@@ -83,6 +84,22 @@ func (genv *GoatEnv) FetchDependencies(depdir string) error {
 		header("#", "Done downloading dependencies for", genv.AbsProjFile())
 	} else {
 		header("-", "No dependencies listed in", genv.AbsProjFile())
+	}
+
+	return nil
+}
+
+// Remove the `.go/pkg` and `.go/src` directories.
+func (genv *GoatEnv) RemoveDependencies(depdir string) error {
+	var err error
+
+	err = os.RemoveAll(depdir + "/pkg")
+	if err != nil {
+		return err
+	}
+	err = os.RemoveAll(depdir + "/src")
+	if err != nil {
+		return err
 	}
 
 	return nil

@@ -14,45 +14,47 @@ won't have to change a single line of code.
 
 # The problem
 
-There are two problems that goat aims to solve:
+There are three problems that goat aims to solve:
 
 * `go get` does not allow for specifying versions of a library.
 
 * `go get` does not have an easy of way of sandboxing your project's development
   environment. You can either muck up your global environment with dependencies
-  or mess with your `GOPATH` everytime you want to develop for that project.
+  or mess with your `GOPATH` every time you want to develop for that project.
   Others that want to work on your project will have to do the same.
 
-* Other dependency managers are strange and have weird command line arguments
-  that I don't feel like learning.
+* `go get` is designed to accomodate a single workspace for all projects.
+  This makes it an exercise in frustration to place go projects freely 
+  in other areas of ones file system.
 
 # The solution
 
-* The root of a goat project has a `.go.yaml` file which specifies a
-  dependency's location, name, and version control reference if applicable. It
-  is formatted using super-simple yaml objects, each having at most four fields.
+* The root of a go project is given a `.go` directory. All dependencies are placed
+  in this directory. The goat command will automatically look for a `.go` in your
+  current working directory or one of its parents, and call that the project root.
+  For the rest of the command's duration your GOPATH will have `<projroot>/.go`
+  prepended to it.  This has many useful properties, most notably that a project's
+  dependencies are sandboxed inside the project directory, but are still usable exactly
+  as they would have been if they were global.
 
-* All dependencies are placed in a `.deps` directory at the root of your
-  project.  goat will automatically look for a `.go.yaml` in your current
-  working directory or one of its parents, and call that the project root. For
-  the rest of the command's duration your GOPATH will have `<projroot>/.deps`
-  prepended to it. This has many useful properties, most notably that your
-  dependencies are sandboxed inside your code, but are still usable exactly as
-  they would have been if they were global.
+* The `.go.yaml` configuration file contains a project's dependency information,
+  It is used to specify type, location, pathname, and version control reference
+  as applicable for each of a project's dependencies. There is  also a `path` field
+  which is used to specify the import path to be used by the current project.
 
-* Goat is a wrapper around the go command line utility. It adds one new command,
-  all other commands are passed straight through to the normal go binary. This
-  command is `goat deps`, and it retrieves all dependencies listed in your
-  `.go.yaml` and puts them into a folder called `.deps` in your project. If any
-  of those dependencies have `.go.yaml` files then those are processed and put
-  in your project's `.deps` folder as well (this is done recursively).
+* The `goat` tool is a wrapper around the `go` command line utility. It adds a
+  few new commands, all other commands are passed straight through to the normal
+  go binary. The main command is `goat deps`, and it retrieves all dependencies
+  listed in your `.go.yaml` file and puts them into the `.go` folder. If any
+  of those dependencies have a `.go.yaml` file of their own then those are
+  also processed and put in your project's `.go` folder (this is done recursively).
 
 # Installation
 
 To use goat you can either get a pre-compiled binary or build it yourself. Once
-you get the binary I recommend renaming aliasing it as `go` (`alias go=goat`),
-so that `goat` gets used whenever you use the `go` utility. Don't worry, unless
-you are in a directory tree with a `.go.yaml` file or use one of goat's special
+you get the binary I recommend aliasing it as `go` (`alias go=goat`), so that
+`goat` gets used whenever you use the `go` utility. Don't worry, unless
+you are in a directory tree with a `.go` directory or use one of goat's special
 commands nothing will be different.
 
 ## Pre-built

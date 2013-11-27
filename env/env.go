@@ -9,6 +9,7 @@ import (
 	"syscall"
 )
 
+var GODIR = ".go"
 var PROJFILE = ".go.yaml"
 
 // unmarshal takes in some bytes and tries to decode them into a GoatEnv
@@ -26,14 +27,14 @@ type GoatEnv struct {
 	// environment
 	ProjRoot string
 
+	// DepDir is the directory to set as the GOPATH when fetching dependencies.
+	// It is relative to the projRoot
+	DepDir string
+
 	// Path is the path that the project will be using for its own internal
 	// import statements, and consequently what other projects depending on this
 	// one will use as well.
 	Path string `yaml:"path"`
-
-	// DepDir is the directory to set as the GOPATH when fetching dependencies.
-	// It is relative to the projRoot
-	DepDir string `yaml:"depdir"`
 
 	// Dependencies are the dependencies listed in the project's Goatfile
 	Dependencies []Dependency `yaml:"deps"`
@@ -53,9 +54,8 @@ func NewGoatEnv(projroot string) (*GoatEnv, error) {
 	}
 
 	genv.ProjRoot = projroot
-	if genv.DepDir == "" {
-		genv.DepDir = ".deps"
-	}
+	genv.DepDir = GODIR
+
 	return genv, nil
 }
 

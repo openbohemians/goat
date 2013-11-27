@@ -25,7 +25,7 @@ func FindProjRoot(dir string) (string, error) {
 // IsProjRoot returns whether or not a particular directory is the project
 // root for a goat project (aka, whether or not it has a goat file)
 func IsProjRoot(dir string) bool {
-	goatfile := filepath.Join(dir, PROJFILE)
+	goatfile := filepath.Join(dir, GODIR)
 	if _, err := os.Stat(goatfile); os.IsNotExist(err) {
 		return false
 	}

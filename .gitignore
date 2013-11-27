@@ -21,6 +21,10 @@ _testmain.go
 
 *.exe
 
-.deps/
 bin/
 rel/
+.go/pkg
+.go/src
+.deps/
+
+_work/

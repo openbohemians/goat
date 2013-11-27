@@ -26,14 +26,19 @@ Usage:
 
 The commands are:
 
-	deps    Read the .go.yaml file for this project and set up dependencies in
-			the dependencies folder specified (default ".deps"). Recursively
-			download dependencies wherever a .go.yaml file is encountered
+  deps [install]
+      Read the .go.yaml file for this project and install specified dependencies
+      in the .go folder. Recursively download dependencies wherever a .go.yaml
+      file is encountered.
 
-    ghelp   Show this dialog
+  deps uninstall
+      Remove all previously installed dependencies.
 
-All other commands are passed through to the go binary on your system. Try '%s
-help' for its available commands
+  deps help
+      Show this dialog.
+
+All other commands are passed through to the go binary on your system.
+Try '%s help' for its available commands
 `, os.Args[0], os.Args[0])
 	os.Exit(0)
 }
@@ -63,23 +68,22 @@ func main() {
 	}
 
 	args := os.Args[1:]
-	if len(args) < 1 {
-		printGhelp()
-	}
+	if len(args) < 1 { printGhelp()	}
 
-	switch args[0] {
-	case "deps":
-		if genv != nil {
-			err := genv.FetchDependencies(genv.AbsDepDir())
-			if err != nil {
-				fatal(err)
-			}
-		} else {
-			fatal(errors.New(".go.yaml file not found on current path"))
+  args = append(args, "") // ensure there is an args[1]
+
+	if args[0] == "deps" {
+		switch args[1] {
+		case "install":
+			InstallDepsCmd(genv)
+		case "uninstall", "remove":
+			UninstallDepsCmd(genv)
+		case "help":
+			printGhelp()
+		default:
+			InstallDepsCmd(genv)
 		}
-	case "ghelp":
-		printGhelp()
-	default:
+	} else {
 		if actualgo, ok := ActualGo(); ok {
 			exec.PipedCmd(actualgo, args...)
 		} else {
@@ -88,6 +92,29 @@ func main() {
 			newargs[0] = "go"
 			exec.PipedCmd("/usr/bin/env", newargs...)
 		}
+	}
+}
+
+func InstallDepsCmd(genv *env.GoatEnv) {
+	if genv != nil {
+		err := genv.FetchDependencies(genv.AbsDepDir())
+		if err != nil {
+			fatal(err)
+		}
+	} else {
+		fatal(errors.New(".go.yaml file not found on current path"))
+	}
+}
+
+// TODO: Maybe ask or pause a moment before actual removal?
+func UninstallDepsCmd(genv *env.GoatEnv) {
+	if genv != nil {
+		err := genv.RemoveDependencies(genv.AbsDepDir())
+		if err != nil {
+			fatal(err)
+		}
+	} else {
+		fatal(errors.New(".go.yaml file not found on current path"))
 	}
 }
 
