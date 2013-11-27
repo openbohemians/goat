@@ -1,0 +1,2 @@
+This is file is here only because I want tht .go directory
+to be in the git repo. Will have to figure out a better way.

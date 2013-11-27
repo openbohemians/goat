@@ -68,9 +68,11 @@ func main() {
 	}
 
 	args := os.Args[1:]
-	if len(args) < 1 { printGhelp()	}
+	if len(args) < 1 {
+		printGhelp()
+	}
 
-  args = append(args, "") // ensure there is an args[1]
+	args = append(args, "") // ensure there is an args[1]
 
 	if args[0] == "deps" {
 		switch args[1] {
