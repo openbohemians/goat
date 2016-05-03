@@ -1,0 +1,41 @@
+goat(1) -- Go vendoring and project isolation tool
+==================================================
+
+## SYNOPSIS
+
+`goat command` [arguments]
+
+## DESCRIPTION
+
+Goat is a command-line wrapper for go which handles dependency management
+and project isolation in a sane way.
+
+## COMMANDS
+
+* **deps**
+  Read the .go.yaml file for this project and set up dependencies in
+  the dependencies folder specified (default ".deps"). Recursively
+  download dependencies wherever a .go.yaml file is encountered
+
+* **ghelp**
+  Show this dialog
+
+All other commands are passed through to the go binary on your system. Try 'goat help'
+for its available commands.
+
+## ENVIRONMENT
+
+When the `goat` command is executed, it chnages the `$GOPATH` environment variable to
+the root directory of the current project.
+
+## COPYRIGHT
+
+(c) 2016 Open Bohemians
+
+## SEE ALSO
+
+go(1)
+
+
+## OPTIONS
+
