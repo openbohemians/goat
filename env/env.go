@@ -1,7 +1,7 @@
 package env
 
 import (
-	. "goat/common"
+	. "goat/spec"
 	"io/ioutil"
 	"launchpad.net/goyaml"
 	"os"

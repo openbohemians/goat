@@ -1,9 +1,9 @@
 package deps
 
 import (
-	"fmt"
+	. "goat/spec"
 	"goat/exec"
-	. "goat/common"
+	"fmt"
 )
 
 func GoGet(depdir string, dep *Dependency) error {

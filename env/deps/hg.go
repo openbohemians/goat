@@ -1,7 +1,7 @@
 package deps
 
 import (
-	. "goat/common"
+	. "goat/spec"
 	"goat/exec"
 	"fmt"
 	"os"

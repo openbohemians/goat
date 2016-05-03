@@ -1,7 +1,7 @@
 package env
 
 import (
-	. "goat/common"
+	. "goat/spec"
 	"goat/env/deps"
 	"errors"
 	"fmt"

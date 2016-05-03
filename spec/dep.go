@@ -1,4 +1,4 @@
-package common
+package spec
 
 type Dependency struct {
 	// Location is the url/uri of the remote location where the dependency can
