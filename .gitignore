@@ -21,6 +21,8 @@ _testmain.go
 
 *.exe
 
-.deps/
 bin/
 rel/
+vendor/
+
+

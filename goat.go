@@ -1,10 +1,10 @@
 package main
 
 import (
+	"goat/env"
+	"goat/exec"
 	"errors"
 	"fmt"
-	"github.com/mediocregopher/goat/env"
-	"github.com/mediocregopher/goat/exec"
 	"os"
 	"syscall"
 )
@@ -17,8 +17,7 @@ func fatal(err error) {
 func printGhelp() {
 	fmt.Printf(
 		`Goat is a command-line wrapper for go which handles dependency
-management in a sane way. Check the goat docs at github.com/mediocregopher/goat
-for a more in-depth overview.
+management in a sane way.
 
 Usage:
 

@@ -19,3 +19,4 @@ type Dependency struct {
 	// commit hash). Default depends on the Type, git is "master", hg is "tip".
 	Reference string `yaml:"reference"`
 }
+

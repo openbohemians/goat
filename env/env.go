@@ -1,7 +1,7 @@
 package env
 
 import (
-	. "github.com/mediocregopher/goat/common"
+	. "goat/common"
 	"io/ioutil"
 	"launchpad.net/goyaml"
 	"os"
@@ -54,7 +54,7 @@ func NewGoatEnv(projroot string) (*GoatEnv, error) {
 
 	genv.ProjRoot = projroot
 	if genv.DepDir == "" {
-		genv.DepDir = ".deps"
+		genv.DepDir = "vendor" //".deps"
 	}
 	return genv, nil
 }
@@ -78,21 +78,32 @@ func pathExists(path string) bool {
 }
 
 // Setup makes sure the goat env has all the proper directories created inside
-// of it. This includes the lib/ directory, and if it's specified the Path
-// loopback in the lib/ directory
+// of it. This includes the vendor/ directory, and if it's specified the Path
+// loopback in the vendor/ directory
 func (genv *GoatEnv) Setup() error {
 	var err error
 
-	// Make the lib directory if it doesn't exist
 	depdir := genv.AbsDepDir()
+	srcdir := filepath.Join(depdir, "src")
+
+	// Make vendor directory if it doesn't exist
 	if !pathExists(depdir) {
 		err = os.Mkdir(depdir, 0755)
+		if err != nil {
+			return err
+		}
+  }
+
+  // Make src directory if it doesn't exist
+	if !pathExists(srcdir) {
+		err = os.Mkdir(srcdir, 0755)
 		if err != nil {
 			return err
 		}
 	}
 
 	if genv.Path != "" {
+    // TODO: sould the loopback path just be "../.."?
 		loopbackPath := filepath.Join(depdir, "src", genv.Path)
 		if !pathExists(loopbackPath) {
 			loopbackDir := filepath.Dir(loopbackPath)
@@ -111,3 +122,4 @@ func (genv *GoatEnv) PrependToGoPath() error {
 	gopath, _ := syscall.Getenv("GOPATH")
 	return syscall.Setenv("GOPATH", genv.AbsDepDir()+":"+gopath)
 }
+

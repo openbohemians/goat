@@ -1,16 +1,16 @@
 package env
 
 import (
+	. "goat/common"
+	"goat/env/deps"
 	"errors"
 	"fmt"
-	. "github.com/mediocregopher/goat/common"
-	"github.com/mediocregopher/goat/env/deps"
 	"path/filepath"
 )
 
-type typefunc func(string, *Dependency) error
+type getfunc func(string, *Dependency) error
 
-var typemap = map[string]typefunc{
+var getmap = map[string] getfunc {
 	"":    deps.GoGet,
 	"get": deps.GoGet,
 	"git": deps.Git,
@@ -53,7 +53,7 @@ func (genv *GoatEnv) FetchDependencies(depdir string) error {
 				dep.Path = dep.Location
 			}
 
-			fun, ok := typemap[dep.Type]
+			fun, ok := getmap[dep.Type]
 			if !ok {
 				return errors.New("Unknown dependency type: " + dep.Type)
 			}
