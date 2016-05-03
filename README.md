@@ -50,24 +50,17 @@ There are two problems that goat aims to solve:
 # Installation
 
 To use goat you can either get a pre-compiled binary or build it yourself. Once
-you get the binary I recommend renaming aliasing it as `go` (`alias go=goat`),
+you get the binary I recommend aliasing it as `go` (`alias go=goat`),
 so that `goat` gets used whenever you use the `go` utility. Don't worry, unless
 you are in a directory tree with a `.go.yaml` file or use one of goat's special
 commands nothing will be different.
 
-By default, goat uses the `vendor` directory to store all depenendencies. This
-has become the standard location for all Go project as of Go 1.6. However, if
-you are the rebellious type, you can change this by adding a `depdir:` entry to
-the top-level of your `.go.yaml` file (e.g. `depdir: .deps`). Keep in mind
-though, that is a non-standard location and if you or someone else has to
-fallback to the original `go` command complications might arise.
-
-## Pre-built
+### Pre-built
 
 Check the releases tab on github, the latest release will have pre-compiled
 binaries for various systems, choose the one that applies to you.
 
-## Build it yourself
+### Build it yourself
 
 To build goat yourself make sure you have `go` installed (go figure).
 
@@ -95,6 +88,6 @@ don't really fit in anywhere else that might be useful to know about.
 
 Goat ASCII Art (c) 1997 ejm, Creative Commons
 
-[tutorial]: /docs/tut.md
+[tutorial]: /docs/tutorial.md
 [projfile]: /docs/projfile.md
 [special]: /docs/special.md
