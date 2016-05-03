@@ -22,6 +22,6 @@ bin:
 	mkdir bin
 
 deps:
-	mkdir -p .deps; \
-	GOPATH=$(CURDIR)/.deps go get launchpad.net/goyaml
+	mkdir -p vendor/src; \
+	GOPATH=$(CURDIR)/vendor go get launchpad.net/goyaml
 
