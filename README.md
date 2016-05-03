@@ -1,4 +1,4 @@
-# goat
+# Know what you need? ... It's a *goat*!
 
        _))
       /* \     _~
@@ -43,9 +43,9 @@ There are two problems that goat aims to solve:
 * Goat is a wrapper around the go command line utility. It adds one new command,
   all other commands are passed straight through to the normal go binary. This
   command is `goat deps`, and it retrieves all dependencies listed in your
-  `.go.yaml` and puts them into a folder called `.deps` in your project. If any
+  `.go.yaml` and puts them into a folder called `vendor` in your project. If any
   of those dependencies have `.go.yaml` files then those are processed and put
-  in your project's `.deps` folder as well (this is done recursively).
+  in your project's `vendor` folder as well (this is done recursively).
 
 # Installation
 
@@ -54,6 +54,13 @@ you get the binary I recommend renaming aliasing it as `go` (`alias go=goat`),
 so that `goat` gets used whenever you use the `go` utility. Don't worry, unless
 you are in a directory tree with a `.go.yaml` file or use one of goat's special
 commands nothing will be different.
+
+By default, goat uses the `vendor` directory to store all depenendencies. This
+has become the standard location for all Go project as of Go 1.6. However, if
+you are the rebellious type, you can change this by adding a `depdir:` entry to
+the top-level of your `.go.yaml` file (e.g. `depdir: .deps`). Keep in mind
+though, that is a non-standard location and if you or someone else has to
+fallback to the original `go` command complications might arise.
 
 ## Pre-built
 
@@ -65,7 +72,7 @@ binaries for various systems, choose the one that applies to you.
 To build goat yourself make sure you have `go` installed (go figure).
 
 ```bash
-git clone https://github.com/mediocregopher/goat.git
+git clone https://github.com/openbohemians/goat.git
 cd goat
 make
 ```
@@ -78,6 +85,11 @@ See the [tutorial][tutorial] for a basic use case for goat. After that check out
 the [.go.yaml file][projfile] for more details on what kind of features goat has
 for dependency management. There are also some [special features][special] that
 don't really fit in anywhere else that might be useful to know about.
+
+# Authors
+
+* Brian Picciano
+* Tom Sawyer
 
 # Copyrights
 
