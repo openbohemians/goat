@@ -32,10 +32,10 @@ There are two problems that goat aims to solve:
   dependency's location, name, and version control reference if applicable. It
   is formatted using super-simple yaml objects, each having at most four fields.
 
-* All dependencies are placed in a `.deps` directory at the root of your
+* All dependencies are placed in a `vendor` directory at the root of your
   project.  goat will automatically look for a `.go.yaml` in your current
   working directory or one of its parents, and call that the project root. For
-  the rest of the command's duration your GOPATH will have `<projroot>/.deps`
+  the rest of the command's duration your GOPATH will have `<projroot>/vendor`
   prepended to it. This has many useful properties, most notably that your
   dependencies are sandboxed inside your code, but are still usable exactly as
   they would have been if they were global.
